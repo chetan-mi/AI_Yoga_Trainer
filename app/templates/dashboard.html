@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Yoga Pose Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-dashboard.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <div class="nav-logo">
+                <img src="/static/uploads/yogologo.jpg" alt="Yoga Logo" style="height: 40px">
+                <span class="logo-text">AI Yoga Trainer</span>
+            </div>
+        </div>
+        <div class="navbar-nav">
+            <a href="{{ url_for('index') }}" class="nav-link">🏠 Home</a>
+            <a href="{{ url_for('webcam') }}" class="nav-link">📷 Practice</a>
+            <a href="{{ url_for('update_image_predictor') }}" class="nav-link">🖼️ Upload</a>
+            <a href="{{ url_for('yoga_manual') }}" class="nav-link">📖 Manual</a>
+            <a href="{{ url_for('profile') }}" class="nav-link">👤 Profile</a>
+        </div>
+        <div class="navbar-user">
+            <div class="user-details">
+                <div class="username">{{ user.username }}</div>
+                <div class="email">{{ user.email }}</div>
+            </div>
+            <div class="user-avatar">
+                {% if user.user_data.profile.avatar_url %}
+                    <img src="{{ user.user_data.profile.avatar_url }}" alt="Avatar" class="avatar-img">
+                {% else %}
+                    <div class="avatar-placeholder">👤</div>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('logout', next='/dashboard') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome back, {{ user.username }}! 👋</h1>
+            <p>Here's what's happening with your yoga journey today.</p>
+            <a href="{{ url_for('webcam') }}" class="begin-btn">Begin Yoga Practice 🧘‍♂️</a>
+        </div>
+
+        <!-- Yoga Stats Section - MOVED UP for better visibility -->
+        <div class="stats-section">
+            <h2>Your Yoga Journey 📊</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalAsanas">0</div>
+                    <div class="stat-label">Total Asanas</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number" id="uniqueAsanas">0</div>
+                    <div class="stat-label">Unique Poses</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number" id="currentStreak">0</div>
+                    <div class="stat-label">Day Streak 🔥</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-level" id="userLevel">New Yogi 🎯</div>
+                    <div class="stat-label">Your Level</div>
+                </div>
+            </div>
+
+            <div class="activity-charts">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>7-Day Activity</h3>
+                        <button class="refresh-btn" onclick="refreshStats()">🔄</button>
+                    </div>
+                    <div class="daily-activity" id="dailyActivity">
+                        <div class="loading">Loading activity data...</div>
+                    </div>
+                </div>
+                
+                <div class="top-asanas">
+                    <h3>Top Asanas</h3>
+                    <div id="topAsanasList">
+                        <div class="loading">Loading top asanas...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Stats Grid -->
+        <div class="account-stats-section">
+            <h2>Account Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ user.user_data.status.login_count }}</div>
+                    <div class="stat-label">Total Logins</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">
+                        {% if user.user_data.status.last_login %}
+                            {{ user.user_data.status.last_login.strftime('%b %d') }}
+                        {% else %}
+                            Never
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">Last Login</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">
+                        {{ user.user_data.status.is_verified|replace('True', 'Yes')|replace('False', 'No') }}
+                    </div>
+                    <div class="stat-label">Account Verified</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">
+                        {{ user.user_data.timestamps.created_at.strftime('%b %d, %Y') }}
+                    </div>
+                    <div class="stat-label">Member Since</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="actions-section">
+            <h2>Quick Actions</h2>
+            <div class="actions-grid">
+                <div class="action-card" onclick="window.location.href='/profile'">
+                    <div class="action-icon">👤</div>
+                    <h3 class="action-title">Profile Settings</h3>
+                    <p class="action-description">Update your personal information and preferences</p>
+                </div>
+
+                <div class="action-card" onclick="window.location.href='/webcam'">
+                    <div class="action-icon">📷</div>
+                    <h3 class="action-title">Start Practice</h3>
+                    <p class="action-description">Begin real-time yoga pose detection</p>
+                </div>
+
+                <div class="action-card" onclick="window.location.href='/update-image-predictor'">
+                    <div class="action-icon">🖼️</div>
+                    <h3 class="action-title">Upload Image</h3>
+                    <p class="action-description">Analyze yoga poses from uploaded images</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Leaderboard Section -->
+        <div class="leaderboard-section">
+            <div class="leaderboard-header">
+                <div class="leaderboard-title-section">
+                    <h2 class="leaderboard-title">🏆 Global Leaderboard</h2>
+                    <div class="leaderboard-subtitle">Top yoga practitioners ranked by total asanas</div>
+                </div>
+                <button class="refresh-btn" onclick="refreshLeaderboard(this)">
+                    <span class="refresh-icon">🔄</span>
+                    <span>Refresh</span>
+                </button>
+            </div>
+            <div id="leaderboard-list" class="leaderboard-list">
+                <div class="loading">Loading leaderboard...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/js-dashboard.js') }}"></script>
+</body>
+</html>

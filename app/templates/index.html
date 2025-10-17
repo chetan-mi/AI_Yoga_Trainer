@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Yoga Trainer - Sanskrit Wisdom Meets Modern Technology</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <img
+            src="{{ url_for('static', filename='uploads/yogologo.jpg') }}"
+            alt="Yoga Logo"
+            style="height: 40px"
+          />
+          <span class="logo-text">AI Yoga Trainer</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <!-- <li>
+            <a href="{{ url_for('yoga_manual') }}" class="nav-manual-link"
+              >Yoga Manual</a
+            >
+          </li> -->
+          <li><a href="#features">Features</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          {% if user %}
+          <!-- User is logged in -->
+          <div class="user-info">
+            {% if user.avatar_url %}
+            <img src="{{ user.avatar_url }}" alt="Avatar" class="user-avatar" />
+            {% else %}
+            <div class="user-avatar-placeholder">👤</div>
+            {% endif %}
+            <span class="username">{{ user.username }}</span>
+            <a href="{{ url_for('logout', next='/') }}" class="btn btn-logout"
+              >Logout</a
+            >
+          </div>
+          {% else %}
+          <!-- User is not logged in -->
+          <a
+            href="{{ url_for('login') }}"
+            class="btn btn-login"
+            style="
+              background-color: #22c55e;
+              color: #ffffff;
+              padding: 8px 14px;
+              border-radius: 8px;
+              text-decoration: none;
+              font-weight: 600;
+            "
+            >Login</a
+          >
+          {% endif %}
+        </div>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">AI-Powered Yoga Trainer</h1>
+          <p class="hero-subtitle">
+            Blending the timeless teachings of Patanjali with modern AI —
+            real-time posture correction, authentic Sanskrit guidance, and voice
+            feedback.
+          </p>
+          <div class="hero-buttons">
+            <a href="{{ url_for('yoga_manual') }}" class="btn btn-manual"
+              >Explore Yoga Manual</a
+            >
+            <button class="btn btn-hero" onclick="redirectToDashboard()">
+              View Dashboard
+            </button>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img
+            src="{{ url_for('static', filename='uploads/Save-1.png') }}"
+            alt="Yoga Practice"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section id="features" class="welcome">
+      <div class="container">
+        <h2 class="section-title">Welcome to AI Yoga Trainer</h2>
+        <div class="welcome-content">
+          <div class="feature-cards">
+            <div
+              class="feature-card featured-manual"
+              onclick="window.location.href='/yoga-manual'"
+            >
+              <div class="feature-icon">📖</div>
+              <h3>Comprehensive Yoga Manual</h3>
+              <p>
+                Learn 100+ asanas with detailed benefits, precautions, and video
+                tutorials. Your complete guide to yoga practice.
+              </p>
+              <div class="manual-badge">Essential Reading</div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🎥</div>
+              <h3>Real-Time Pose Detection</h3>
+              <p>Practice asanas with webcam-based AI corrections.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🗣️</div>
+              <h3>Voice Guidance</h3>
+              <p>Receive feedback in Sanskrit with clear instructions.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📊</div>
+              <h3>Progress Tracking</h3>
+              <p>Track your practice, accuracy, and growth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="philosophy">
+      <div class="container">
+        <div class="philosophy-content">
+          <div class="philosophy-quote">
+            <div class="sanskrit-text">योगः चित्तवृत्ति निरोधः</div>
+            <div class="transliteration">Yogaḥ citta-vṛtti-nirodhaḥ</div>
+            <div class="english-meaning">
+              "Yoga is the stilling of the fluctuations of the mind."
+            </div>
+            <div class="attribution">— Patanjali's Yoga Sutras</div>
+          </div>
+          <div class="philosophy-description">
+            <p>
+              Yoga is not just physical exercise; it is a science of holistic
+              well-being that harmonizes the body, mind, and spirit. Through
+              centuries, yoga has guided humanity towards inner peace, clarity,
+              and resilience.
+            </p>
+            <p>
+              Our AI-powered trainer brings ancient yogic wisdom into today's
+              world with personalized, interactive guidance. Experience the
+              union of tradition and technology as you embark on your
+              transformative journey.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Yoga Importance Section -->
+    <section class="importance">
+      <div class="container">
+        <h2 class="section-title">Why Yoga Matters</h2>
+        <div class="importance-content">
+          <div class="importance-text">
+            <div class="text-content">
+              <p>
+                Yoga is not just physical exercise; it is a science of holistic
+                well-being that harmonizes the body, mind, and spirit.
+              </p>
+              <p>
+                Through centuries, yoga has guided humanity towards inner peace,
+                clarity, and resilience.
+              </p>
+              <p>
+                With AI-powered innovation, we are reimagining yoga for the
+                digital age — making it accessible, personalized, and deeply
+                rooted in tradition.
+              </p>
+            </div>
+            <div class="highlight-box">
+              <p>
+                "The union of ancient wisdom and modern technology creates a
+                path for everyone to experience the transformative power of
+                yoga."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <h2 class="section-title">About Our Vision</h2>
+        <div class="about-content">
+          <div class="about-image">
+            <img
+              src="{{ url_for('static', filename='uploads/OIP.jpg') }}"
+              alt="About AI Yoga Trainer"
+              class="about-img"
+            />
+          </div>
+          <div class="about-text">
+            <p>
+              AI Yoga Trainer is where ancient wisdom meets modern innovation.
+              Our mission is to make the timeless practice of yoga accessible to
+              everyone, everywhere, through a personalized and interactive
+              AI-powered platform.
+            </p>
+            <p>
+              We believe in honoring the roots of yoga while embracing the
+              future. Our trainer provides real-time feedback on your asanas,
+              guided by authentic Sanskrit principles, to ensure you practice
+              safely and effectively. Whether you're a beginner or a seasoned
+              yogi, our goal is to support your journey toward holistic
+              well-being.
+            </p>
+            <p>
+              Join us in this unique fusion of tradition and technology, and
+              discover a path to inner peace, strength, and clarity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Begin Your Journey?</h2>
+          <p>
+            Experience the perfect blend of ancient wisdom and modern technology
+          </p>
+          <div class="cta-buttons">
+            <a href="{{ url_for('yoga_manual') }}" class="btn btn-manual-cta"
+              >Read Yoga Manual First</a
+            >
+            <button class="btn btn-primary" onclick="redirectToWebcam()">
+              Start Your Practice
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <img
+              src="{{ url_for('static', filename='uploads/yogologo.jpg') }}"
+              alt="Yoga Logo"
+              style="height: 40px"
+            />
+            <span class="logo-text">AI Yoga Trainer</span>
+          </div>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#philosophy">Philosophy</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 AI Yoga Trainer. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

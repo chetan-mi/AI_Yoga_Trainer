@@ -1,0 +1,5 @@
+venv/
+/home/bheeman-ubuntu/Desktop/zipFinal/data/
+.env
+data
+__pycache__

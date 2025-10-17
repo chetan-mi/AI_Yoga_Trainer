@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Yoga Pose Detector</title>
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/stylel-profile.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="navbar-brand">🧘‍♀️ Yoga Pose Detector</div>
+      <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('webcam') }}">Practice</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar" id="avatarDisplay">
+          <!-- Avatar will be loaded here -->
+          👤
+        </div>
+        <h1 class="profile-name" id="fullNameDisplay">Loading...</h1>
+        <div class="profile-email" id="emailDisplay">{{ user.email }}</div>
+      </div>
+
+      <!-- Profile Content -->
+      <div class="profile-content">
+        <!-- Flash Messages -->
+        <div id="flashMessages"></div>
+
+        <!-- Profile Form -->
+        <form id="profileForm">
+          <div class="profile-section">
+            <h2 class="section-title">Personal Information</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="first_name"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="last_name"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" class="form-control" disabled>
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                  <option value="prefer_not_to_say">Prefer not to say</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  class="form-control"
+                  min="1"
+                  max="120"
+                  placeholder="Enter your age"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="avatarUrl">Avatar URL</label>
+              <input
+                type="url"
+                id="avatarUrl"
+                name="avatar_url"
+                class="form-control"
+                placeholder="https://example.com/avatar.jpg"
+                disabled
+              />
+              <div class="avatar-preview" id="avatarPreview">👤</div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h2 class="section-title">About Me</h2>
+            <div class="form-group">
+              <label for="bio">Bio</label>
+              <textarea
+                id="bio"
+                name="bio"
+                class="form-control"
+                placeholder="Tell us about your yoga journey..."
+                disabled
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button
+              type="button"
+              id="accountSettingsBtn"
+              class="btn btn-secondary account-settings"
+              onclick="window.location.href='{{ url_for("account_settings") }}'"
+            >
+              🔒 Account Settings
+            </button>
+            <button type="button" id="editBtn" class="btn btn-primary">
+              ✏️ Edit Profile
+            </button>
+            <button
+              type="button"
+              id="cancelBtn"
+              class="btn btn-secondary"
+              style="display: none"
+            >
+              ❌ Cancel
+            </button>
+            <button
+              type="submit"
+              id="saveBtn"
+              class="btn btn-success"
+              style="display: none"
+            >
+              💾 Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <script src="{{ url_for('static', filename='js/js-profile.js') }}"></script>
+  </body>
+</html>

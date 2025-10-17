@@ -1,0 +1,182 @@
+(() => {
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusEl = document.getElementById('status');
+  const poseNameEl = document.getElementById('poseName');
+  const confidenceBar = document.getElementById('confidenceBar');
+  const confidenceValue = document.getElementById('confidenceValue');
+  const instructionsList = document.getElementById('instructionsList');
+  const feedbackText = document.getElementById('feedbackText');
+  const annotatedImg = document.getElementById('annotated');
+
+  let stream = null;
+  let loopHandle = null;
+  let lastPose = null;
+  let speechSynthesis = window.speechSynthesis;
+  const CAPTURE_MS = 1000; // send a frame every 1 second
+
+  async function startCamera() {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+      video.srcObject = stream;
+      await video.play();
+      statusEl.textContent = 'Camera started';
+    } catch (err) {
+      console.error('Failed to start camera', err);
+      statusEl.textContent = 'Camera error';
+    }
+  }
+
+  function stopCamera() {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+    }
+    statusEl.textContent = 'Stopped';
+  }
+
+  function speak(text) {
+    if (speechSynthesis) {
+      speechSynthesis.cancel(); // Cancel any ongoing speech
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.8;
+      utterance.pitch = 1;
+      utterance.volume = 0.7;
+      speechSynthesis.speak(utterance);
+    }
+  }
+
+  async function getInstructionsAndFeedback(poseName) {
+    try {
+      const response = await fetch('/get_instructions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pose_name: poseName })
+      });
+      
+      const data = await response.json();
+      if (data.error) {
+        console.error('Error getting instructions:', data.error);
+        return null;
+      }
+      
+      return {
+        instructions: data.instructions,
+        feedback: data.feedback
+      };
+    } catch (error) {
+      console.error('Error fetching instructions:', error);
+      return null;
+    }
+  }
+
+  function updateInstructions(instructions) {
+    if (instructions) {
+      // Split instructions by lines and create list items
+      const lines = instructions.split('\n').filter(line => line.trim());
+      instructionsList.innerHTML = '';
+      
+      lines.forEach(line => {
+        if (line.trim().startsWith('-')) {
+          const li = document.createElement('li');
+          li.textContent = line.trim().substring(1).trim();
+          instructionsList.appendChild(li);
+        } else if (line.trim()) {
+          const li = document.createElement('li');
+          li.textContent = line.trim();
+          instructionsList.appendChild(li);
+        }
+      });
+    }
+  }
+
+  function updateFeedback(feedback) {
+    if (feedback) {
+      feedbackText.textContent = feedback;
+    }
+  }
+
+  async function captureAndPredict() {
+    if (!video.videoWidth || !video.videoHeight) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.8));
+    const form = new FormData();
+    form.append('file', new File([blob], 'frame.jpg', { type: 'image/jpeg' }));
+
+    try {
+      const res = await fetch('/predict', { method: 'POST', body: form });
+      const data = await res.json();
+      if (data.error) {
+        statusEl.textContent = data.error;
+        return;
+      }
+      
+      // Update pose name and confidence
+      poseNameEl.textContent = data.pose;
+      const confidence = Math.round(data.confidence * 100);
+      confidenceValue.textContent = confidence + '%';
+      confidenceBar.style.width = confidence + '%';
+      
+      // Update annotated image
+      if (data.image_url) {
+        annotatedImg.src = data.image_url + `?t=${Date.now()}`;
+      }
+      
+      // If pose changed, get new instructions and speak
+      if (data.pose !== lastPose) {
+        lastPose = data.pose;
+        
+        // Speak the pose name
+        speak(`You are now doing ${data.pose}`);
+        
+        // Get instructions and feedback from Gemini
+        const instructionsData = await getInstructionsAndFeedback(data.pose);
+        if (instructionsData) {
+          updateInstructions(instructionsData.instructions);
+          updateFeedback(instructionsData.feedback);
+        }
+      }
+      
+    } catch (e) {
+      console.error(e);
+      statusEl.textContent = 'Network error';
+    }
+  }
+
+  function startLoop() {
+    if (loopHandle) return;
+    statusEl.textContent = 'Detecting...';
+    loopHandle = setInterval(captureAndPredict, CAPTURE_MS);
+  }
+
+  function stopLoop() {
+    if (loopHandle) {
+      clearInterval(loopHandle);
+      loopHandle = null;
+    }
+    statusEl.textContent = 'Paused';
+    speechSynthesis.cancel(); // Stop any ongoing speech
+  }
+
+  startBtn.addEventListener('click', async () => {
+    if (!stream) await startCamera();
+    startLoop();
+  });
+
+  stopBtn.addEventListener('click', () => {
+    stopLoop();
+    stopCamera();
+  });
+
+  // Initialize with default state
+  stopBtn.disabled = true;
+})();

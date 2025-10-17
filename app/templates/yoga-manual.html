@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoga Asana Manual - Master Your Practice</title>
+    <meta
+      name="description"
+      content="Comprehensive guide to yoga poses with detailed benefits, precautions, and video tutorials. Perfect for beginners to advanced practitioners."
+    />
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style-yoga-manual.css') }}"
+  />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <div class="nav-logo">
+            <img src="/static/uploads/yogologo.jpg" alt="Yoga Logo" style="height: 40px">
+            <span class="logo-text">AI Yoga Trainer</span>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('index') }}">🏠 Home</a></li>
+          <li><a href="{{ url_for('webcam') }}">🎥 Practice</a></li>
+          <li><a href="{{ url_for('dashboard') }}">📊 Dashboard</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Yoga Asana Manual</h1>
+      <p>
+        Discover the ancient art of yoga. Learn poses, benefits, and proper
+        techniques for your practice.
+      </p>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search poses by Sanskrit or English name (e.g., Vrksasana, Tree Pose)..."
+        />
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">All Poses</button>
+        <button class="filter-btn" data-filter="beginner">Beginner</button>
+        <button class="filter-btn" data-filter="intermediate">
+          Intermediate
+        </button>
+        <button class="filter-btn" data-filter="advanced">Advanced</button>
+        <button class="filter-btn" data-filter="standing">Standing</button>
+        <button class="filter-btn" data-filter="seated">Seated</button>
+        <button class="filter-btn" data-filter="inversion">Inversion</button>
+        <button class="filter-btn" data-filter="balancing">Balancing</button>
+        <button class="filter-btn" data-filter="backbend">Backbend</button>
+      </div>
+    </section>
+
+    <!-- Results Count -->
+    <div class="results-count" id="resultsCount"></div>
+
+    <!-- Asana Grid -->
+    <div class="asana-grid" id="asanaGrid"></div>
+
+    <!-- No Results Message -->
+    <div class="no-results" id="noResults" style="display: none">
+      <h3>No poses found</h3>
+      <p>Try adjusting your search or filter criteria</p>
+    </div>
+
+    <!-- Updated Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <a href="{{ url_for('index') }}" class="back-home-btn"> 🏠 Back to Home </a
+    >""
+
+    <script src="{{ url_for('static', filename='js/js-yoga-manual.js') }}"></script>
+  </body>
+</html>

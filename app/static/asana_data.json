@@ -1,0 +1,402 @@
+{
+  "Sitting_pose_1_normal": {
+    "benefits": [
+      "Provides relaxation for the body",
+      "Improves posture awareness",
+      "Calms the nervous system",
+      "Encourages mindful breathing",
+      "Prepares body for meditation"
+    ],
+    "warnings": [
+      "Avoid slouching to prevent back strain",
+      "Not suitable for long durations without support if you have back pain",
+      "People with hip stiffness may need a cushion",
+      "Avoid sitting on hard surfaces for long",
+      "Those with knee injuries should avoid cross-legged position"
+    ]
+  },
+  "Split_pose": {
+    "benefits": [
+      "Improves flexibility of hamstrings and hips",
+      "Strengthens leg muscles",
+      "Enhances balance and body alignment",
+      "Opens pelvic region",
+      "Boosts circulation in lower limbs"
+    ],
+    "warnings": [
+      "Avoid with hamstring or groin injuries",
+      "Not suitable during pregnancy",
+      "Do not force legs into full split",
+      "Beginners should use props for support",
+      "Avoid if suffering from severe lower back pain"
+    ]
+  },
+  "Staff_Pose_or_Dandasana_": {
+    "benefits": [
+      "Improves posture and spinal alignment",
+      "Strengthens back muscles",
+      "Stretches shoulders and chest",
+      "Prepares body for seated poses",
+      "Enhances focus and stability"
+    ],
+    "warnings": [
+      "Avoid with severe back pain",
+      "People with tight hamstrings should sit on cushion",
+      "Not suitable for those with hip injuries",
+      "Avoid slouching during pose",
+      "Do not practice after spinal surgery without guidance"
+    ]
+  },
+  "Standing_big_toe_hold_pose_or_Utthita_Padangusthasana": {
+    "benefits": [
+      "Strengthens legs and ankles",
+      "Improves balance and coordination",
+      "Stretches hamstrings and calves",
+      "Enhances concentration",
+      "Stimulates abdominal organs"
+    ],
+    "warnings": [
+      "Avoid with hamstring injuries",
+      "Not suitable for people with dizziness",
+      "Avoid during pregnancy",
+      "Do not overstretch knee joint",
+      "Beginners should use wall support"
+    ]
+  },
+  "Standing_Forward_Bend_pose_or_Uttanasana_": {
+    "benefits": [
+      "Stretches spine and hamstrings",
+      "Relieves stress and calms mind",
+      "Stimulates abdominal organs",
+      "Improves digestion",
+      "Relieves fatigue"
+    ],
+    "warnings": [
+      "Avoid with severe back pain",
+      "Not suitable for people with sciatica",
+      "Avoid during late pregnancy",
+      "Do not lock knees",
+      "People with glaucoma should avoid holding head low for long"
+    ]
+  },
+  "Standing_Split_pose_or_Urdhva_Prasarita_Eka_Padasana_": {
+    "benefits": [
+      "Strengthens legs and hips",
+      "Improves balance and concentration",
+      "Stretches hamstrings",
+      "Enhances circulation",
+      "Boosts energy"
+    ],
+    "warnings": [
+      "Avoid with hamstring or hip injuries",
+      "Not suitable during pregnancy",
+      "People with dizziness should avoid",
+      "Do not overstretch spine",
+      "Beginners should practice near support"
+    ]
+  },
+  "Supported_Headstand_pose_or_Salamba_Sirsasana_": {
+    "benefits": [
+      "Improves circulation and energizes body",
+      "Strengthens arms, shoulders, and core",
+      "Calms mind and improves focus",
+      "Boosts confidence",
+      "Stimulates digestive organs"
+    ],
+    "warnings": [
+      "Avoid with high blood pressure or heart problems",
+      "Not suitable for people with neck injuries",
+      "Avoid during pregnancy",
+      "Do not practice without supervision as a beginner",
+      "People with glaucoma should not attempt"
+    ]
+  },
+  "Supported_Shoulderstand_pose_or_Salamba_Sarvangasana_": {
+    "benefits": [
+      "Stimulates thyroid gland",
+      "Improves circulation",
+      "Calms the mind",
+      "Strengthens shoulders and arms",
+      "Relieves fatigue and stress"
+    ],
+    "warnings": [
+      "Avoid with neck or shoulder injuries",
+      "Not suitable during pregnancy",
+      "Avoid if suffering from high blood pressure",
+      "People with glaucoma should not attempt",
+      "Do not practice after spinal injury"
+    ]
+  },
+  "Supta_Baddha_Konasana_": {
+    "benefits": [
+      "Opens hips and groin",
+      "Relieves menstrual discomfort",
+      "Calms the nervous system",
+      "Improves blood circulation",
+      "Relieves fatigue"
+    ],
+    "warnings": [
+      "Avoid with severe hip injuries",
+      "Not suitable during late pregnancy without support",
+      "People with lower back issues should use a bolster",
+      "Do not force knees to ground",
+      "Avoid after hip surgery"
+    ]
+  },
+  "Supta_Virasana_Vajrasana": {
+    "benefits": [
+      "Stretches thighs and ankles",
+      "Improves digestion",
+      "Opens chest and lungs",
+      "Relieves fatigue in legs",
+      "Calms the mind"
+    ],
+    "warnings": [
+      "Avoid with knee or ankle injuries",
+      "Not suitable during pregnancy",
+      "Avoid if suffering from severe lower back pain",
+      "Do not force knees to ground",
+      "People with hip stiffness should use support"
+    ]
+  },
+  "Tortoise_Pose": {
+    "benefits": [
+      "Stretches spine and shoulders",
+      "Improves flexibility of hips",
+      "Calms the mind",
+      "Stimulates abdominal organs",
+      "Enhances concentration"
+    ],
+    "warnings": [
+      "Avoid with back or hip injuries",
+      "Not suitable during pregnancy",
+      "Do not force torso forward",
+      "People with sciatica should avoid",
+      "Beginners should attempt under guidance"
+    ]
+  },
+  "Tree_Pose_or_Vrksasana_": {
+    "benefits": [
+      "Improves balance and stability",
+      "Strengthens legs and spine",
+      "Enhances concentration",
+      "Opens hips",
+      "Boosts confidence"
+    ],
+    "warnings": [
+      "Avoid with ankle or knee injuries",
+      "Not suitable for people with vertigo",
+      "Avoid during pregnancy without support",
+      "Do not lock standing knee",
+      "Beginners should use wall support"
+    ]
+  },
+  "Upward_Bow_(Wheel)Pose_or_Urdhva_Dhanurasana": {
+    "benefits": [
+      "Strengthens arms, legs, and spine",
+      "Opens chest and improves lung capacity",
+      "Stimulates thyroid and pituitary glands",
+      "Boosts energy and reduces fatigue",
+      "Improves spinal flexibility"
+    ],
+    "warnings": [
+      "Avoid with back or wrist injuries",
+      "Not suitable during pregnancy",
+      "People with hernia should avoid",
+      "Do not attempt with high blood pressure",
+      "Beginners should warm up thoroughly"
+    ]
+  },
+  "Upward_Facing_Two-Foot_Staff_Pose_or_Dwi_Pada_Viparita_Dandasana_": {
+    "benefits": [
+      "Strengthens spine, arms, and legs",
+      "Opens chest and lungs",
+      "Improves circulation",
+      "Boosts energy",
+      "Enhances spinal flexibility"
+    ],
+    "warnings": [
+      "Avoid with back injuries",
+      "Not suitable during pregnancy",
+      "Avoid if suffering from heart conditions",
+      "Do not overstretch shoulders",
+      "People with neck pain should avoid"
+    ]
+  },
+  "Upward_Plank_Pose_or_Purvottanasana_": {
+    "benefits": [
+      "Strengthens arms, wrists, and back",
+      "Stretches chest and shoulders",
+      "Improves posture",
+      "Tones core muscles",
+      "Boosts energy"
+    ],
+    "warnings": [
+      "Avoid with wrist or shoulder injuries",
+      "Not suitable for people with neck issues",
+      "Avoid during pregnancy",
+      "Do not collapse lower back",
+      "Beginners should practice gradually"
+    ]
+  },
+  "viparita_virabhadrasana_or_reverse_warrior_pose": {
+    "benefits": [
+      "Strengthens legs and hips",
+      "Opens chest and side body",
+      "Improves flexibility of spine",
+      "Boosts energy",
+      "Enhances concentration"
+    ],
+    "warnings": [
+      "Avoid with knee injuries",
+      "Not suitable for people with spinal issues",
+      "Avoid during pregnancy without guidance",
+      "Do not overstretch torso",
+      "Beginners should avoid collapsing lower back"
+    ]
+  },
+  "Virasana_or_Vajrasana": {
+    "benefits": [
+      "Improves digestion",
+      "Strengthens thighs and ankles",
+      "Calms the mind",
+      "Improves posture",
+      "Relieves fatigue"
+    ],
+    "warnings": [
+      "Avoid with knee or ankle injuries",
+      "Not suitable for people with hip stiffness",
+      "Avoid after knee surgery",
+      "Do not sit for long durations without support",
+      "Beginners should use cushion support"
+    ]
+  },
+  "Warrior_I_Pose_or_Virabhadrasana_I_": {
+    "benefits": [
+      "Strengthens legs, arms, and shoulders",
+      "Improves balance and stability",
+      "Stretches hips and chest",
+      "Boosts stamina and energy",
+      "Enhances concentration"
+    ],
+    "warnings": [
+      "Avoid with knee or hip injuries",
+      "Not suitable for people with high blood pressure",
+      "Avoid during pregnancy",
+      "Do not overstretch spine",
+      "Beginners should align hips properly"
+    ]
+  },
+  "Warrior_II_Pose_or_Virabhadrasana_II_": {
+    "benefits": [
+      "Strengthens legs and arms",
+      "Improves stability and endurance",
+      "Stretches groin and hips",
+      "Enhances concentration",
+      "Boosts stamina"
+    ],
+    "warnings": [
+      "Avoid with knee or hip injuries",
+      "Not suitable for people with high blood pressure",
+      "Avoid during pregnancy",
+      "Do not collapse front knee inward",
+      "Beginners should avoid overstretching arms"
+    ]
+  },
+  "Warrior_III_Pose_or_Virabhadrasana_III_": {
+    "benefits": [
+      "Strengthens legs, core, and back",
+      "Improves balance and focus",
+      "Stretches hamstrings",
+      "Boosts stamina",
+      "Enhances posture"
+    ],
+    "warnings": [
+      "Avoid with ankle or knee injuries",
+      "Not suitable for people with dizziness",
+      "Avoid during pregnancy",
+      "Do not lock standing knee",
+      "Beginners should use wall support"
+    ]
+  },
+  "Wide-Angle_Seated_Forward_Bend_pose_or_Upavistha_Konasana_": {
+    "benefits": [
+      "Stretches spine, hamstrings, and groin",
+      "Stimulates abdominal organs",
+      "Improves flexibility of hips",
+      "Calms the mind",
+      "Relieves fatigue"
+    ],
+    "warnings": [
+      "Avoid with hamstring or groin injuries",
+      "Not suitable during pregnancy",
+      "Do not overstretch lower back",
+      "People with sciatica should avoid",
+      "Beginners should sit on cushion support"
+    ]
+  },
+  "Wide-Legged_Forward_Bend_pose_or_Prasarita_Padottanasana_": {
+    "benefits": [
+      "Stretches hamstrings and spine",
+      "Strengthens legs",
+      "Calms the mind",
+      "Improves blood circulation",
+      "Relieves stress"
+    ],
+    "warnings": [
+      "Avoid with hamstring injuries",
+      "Not suitable for people with high blood pressure",
+      "Avoid during pregnancy",
+      "Do not lock knees",
+      "Beginners should avoid forcing head to ground"
+    ]
+  },
+  "Wild_Thing_pose_or_Camatkarasana_": {
+    "benefits": [
+      "Strengthens arms, shoulders, and back",
+      "Opens chest and lungs",
+      "Improves spinal flexibility",
+      "Boosts energy",
+      "Enhances confidence"
+    ],
+    "warnings": [
+      "Avoid with shoulder or wrist injuries",
+      "Not suitable for people with back issues",
+      "Avoid during pregnancy",
+      "Do not collapse lower back",
+      "Beginners should avoid forcing the backbend"
+    ]
+  },
+  "Wind_Relieving_pose_or_Pawanmuktasana": {
+    "benefits": [
+      "Improves digestion and relieves bloating",
+      "Stretches lower back",
+      "Stimulates abdominal organs",
+      "Relieves stress",
+      "Calms the mind"
+    ],
+    "warnings": [
+      "Avoid with abdominal surgery",
+      "Not suitable during pregnancy",
+      "People with hernia should avoid",
+      "Avoid with severe spinal problems",
+      "Do not hold breath while in pose"
+    ]
+  },
+  "Yogic_sleep_pose": {
+    "benefits": [
+      "Deeply relaxes body and mind",
+      "Reduces stress and anxiety",
+      "Improves sleep quality",
+      "Balances nervous system",
+      "Promotes mindfulness"
+    ],
+    "warnings": [
+      "Avoid sleeping posture on hard surface without support",
+      "Not suitable for people with severe back pain",
+      "Avoid if suffering from insomnia triggers with lying down",
+      "Do not practice immediately after heavy meals",
+      "Beginners should use cushion support if uncomfortable"
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Yoga Pose Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="yoga-icon">
+            <img src="/static/uploads/yogologo.jpg" alt="Yoga Logo">
+        </div>
+        
+        <div class="logo">
+            <h1>Yoga Pose Detector</h1>
+            <p>Find your balance, perfect your pose</p>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+            <!-- Preserve the next parameter -->
+            {% if request.args.get('next') %}
+                <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+            </div>
+
+            <button type="submit" class="btn" id="loginBtn">Login</button>
+        </form>
+
+        <div class="register-link">
+            Don't have an account? <a href="{{ url_for('register') }}">Create one here</a>
+        </div>
+        
+        <div class="forgot-password-link">
+            <a href="{{ url_for('forgot_password') }}">Forgot your password?</a>
+        </div>
+
+        <!-- <div class="feature-list">
+            <h3>Features</h3>
+            <ul>
+                <li>Real-time pose detection</li>
+                <li>Multi-language support</li>
+                <li>Personalized feedback</li>
+                <li>Progress tracking</li>
+            </ul>
+        </div> -->
+    </div>
+    <script src="{{ url_for('static', filename='js/js-login.js') }}"></script>
+</html>

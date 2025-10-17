@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - Yoga Pose Detector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .settings-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .settings-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .settings-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-content {
+            padding: 2rem;
+        }
+
+        .settings-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .settings-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .current-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .current-info p {
+            margin: 0.25rem 0;
+            color: #666;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .alert.success {
+            background: #e8f5e8;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert.error {
+            background: #fee;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .strength-weak { color: #ff6b6b; }
+        .strength-medium { color: #feca57; }
+        .strength-strong { color: #51cf66; }
+
+        @media (max-width: 768px) {
+            .settings-container {
+                margin: 0 10px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+      /* Modern Modal Styles */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .modal-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 448px;
+        width: 100%;
+        padding: 2rem;
+        animation: slideUp 0.3s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: center;
+      }
+
+      .modal-icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background-color: rgba(239, 68, 68, 0.1);
+      }
+
+      .modal-icon {
+        width: 32px;
+        height: 32px;
+        color: #ef4444;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+      }
+
+      .modal-message {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #737373;
+        margin: 0;
+      }
+
+      .modal-button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+      }
+
+      .modal-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        font-family: inherit;
+        width: 100%;
+      }
+
+      .modal-btn-danger {
+        background-color: #ef4444;
+        color: white;
+        order: -1;
+      }
+
+      .modal-btn-danger:hover {
+        background-color: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      }
+
+      .modal-btn-cancel {
+        background-color: white;
+        color: #1a1a1a;
+        border: 2px solid #e5e5e5;
+      }
+
+      .modal-btn-cancel:hover {
+        background-color: #fafafa;
+        border-color: #d4d4d4;
+      }
+
+      @media (min-width: 640px) {
+        .modal-button-group {
+          flex-direction: row-reverse;
+        }
+        .modal-btn {
+          flex: 1;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Delete Account Modal -->
+    <div id="deleteModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-content">
+          <div class="modal-icon-wrapper">
+            <svg class="modal-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+          </div>
+          <h2 class="modal-title">Delete Your Account?</h2>
+          <p class="modal-message">Are you sure you want to permanently delete your account? All your yoga progress, profile data, and account information will be lost forever. This action cannot be undone.</p>
+          <div class="modal-button-group">
+            <button class="modal-btn modal-btn-danger" onclick="confirmDelete()">Delete Permanently</button>
+            <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-brand">🧘‍♀️ Yoga Pose Detector</div>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Settings Container -->
+    <div class="settings-container">
+        <!-- Settings Header -->
+        <div class="settings-header">
+            <h1>🔒 Account Settings</h1>
+            <p>Manage your account security and preferences</p>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="settings-content">
+            <!-- Flash Messages -->
+            <div id="flashMessages"></div>
+
+            <!-- Change Username Section -->
+            <div class="settings-section">
+                <h2 class="section-title">👤 Change Username</h2>
+                
+                <div class="current-info">
+                    <p><strong>Current Username:</strong> <span id="currentUsername">{{ user.username }}</span></p>
+                </div>
+
+                <form id="usernameForm">
+                    <div class="form-group">
+                        <label for="newUsername">New Username</label>
+                        <input type="text" id="newUsername" name="new_username" class="form-control" 
+                               placeholder="Enter new username" required minlength="3" maxlength="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="usernamePassword">Current Password</label>
+                        <input type="password" id="usernamePassword" name="password" class="form-control" 
+                               placeholder="Enter your current password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        💾 Update Username
+                    </button>
+                </form>
+            </div>
+
+            <!-- Change Password Section -->
+            <div class="settings-section">
+                <h2 class="section-title">🔑 Change Password</h2>
+
+                <form id="passwordForm">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="current_password" class="form-control" 
+                               placeholder="Enter current password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="new_password" class="form-control" 
+                               placeholder="Enter new password" required minlength="6">
+                        <div class="password-strength" id="passwordStrength"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" name="confirm_password" class="form-control" 
+                               placeholder="Confirm new password" required>
+                        <div id="passwordMatch" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        🔑 Change Password
+                    </button>
+                </form>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-section">
+                <h2 class="section-title">⚠️ Danger Zone</h2>
+                <p style="color: #666; margin-bottom: 1rem;">
+                    Once you delete your account, there is no going back. Please be certain.
+                </p>
+                <button type="button" class="btn btn-danger" onclick="showDeleteConfirmation()">
+                    🗑️ Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const flashMessages = document.getElementById('flashMessages');
+        const usernameForm = document.getElementById('usernameForm');
+        const passwordForm = document.getElementById('passwordForm');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordStrength = document.getElementById('passwordStrength');
+        const passwordMatch = document.getElementById('passwordMatch');
+
+        // Show message to user
+        function showMessage(message, type = 'success') {
+            flashMessages.innerHTML = `
+                <div class="alert ${type}">
+                    ${message}
+                </div>
+            `;
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                flashMessages.innerHTML = '';
+            }, 5000);
+        }
+
+        // Check password strength
+        function checkPasswordStrength(password) {
+            if (password.length === 0) {
+                return '';
+            }
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            if (strength < 2) {
+                return '<span class="strength-weak">Weak password</span>';
+            } else if (strength < 4) {
+                return '<span class="strength-medium">Medium strength</span>';
+            } else {
+                return '<span class="strength-strong">Strong password</span>';
+            }
+        }
+
+        // Check password match
+        function checkPasswordMatch() {
+            const password = newPasswordInput.value;
+            const confirm = confirmPasswordInput.value;
+            
+            if (confirm.length === 0) {
+                passwordMatch.innerHTML = '';
+            } else if (password === confirm) {
+                passwordMatch.innerHTML = '<span style="color: #51cf66;">✓ Passwords match</span>';
+            } else {
+                passwordMatch.innerHTML = '<span style="color: #ff6b6b;">✗ Passwords do not match</span>';
+            }
+        }
+
+        // Event Listeners
+        newPasswordInput.addEventListener('input', function() {
+            passwordStrength.innerHTML = checkPasswordStrength(this.value);
+        });
+
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+
+        // Username form submission
+        usernameForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ Updating...';
+                
+                const formData = new FormData(this);
+                const data = {
+                    new_username: formData.get('new_username'),
+                    password: formData.get('password')
+                };
+                
+                const response = await fetch('/api/user/username', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('You must be logged in to change your username. Please login first.');
+                }
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Username updated successfully!', 'success');
+                    document.getElementById('currentUsername').textContent = data.new_username;
+                    this.reset();
+                } else {
+                    showMessage(result.error || 'Failed to update username', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error updating username:', error);
+                showMessage('Error updating username', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+
+        // Password form submission
+        passwordForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Check if passwords match
+            if (newPasswordInput.value !== confirmPasswordInput.value) {
+                showMessage('Passwords do not match', 'error');
+                return;
+            }
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ Changing...';
+                
+                const formData = new FormData(this);
+                const data = {
+                    current_password: formData.get('current_password'),
+                    new_password: formData.get('new_password')
+                };
+                
+                const response = await fetch('/api/user/password', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('You must be logged in to change your password. Please login first.');
+                }
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Password updated successfully!', 'success');
+                    this.reset();
+                    passwordStrength.innerHTML = '';
+                    passwordMatch.innerHTML = '';
+                } else {
+                    showMessage(result.error || 'Failed to update password', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error updating password:', error);
+                showMessage('Error updating password', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+
+        // Delete account confirmation
+        // Delete account modal functions
+        function showDeleteConfirmation() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('active');
+            // Prevent body scroll when modal is open
+        }
+
+        function closeDeleteModal() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.remove('active');
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDeleteModal();
+            }
+        });
+
+        async function confirmDelete() {
+            closeDeleteModal();
+            
+            try {
+                const response = await fetch('/api/user/account', {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showMessage('Account deleted successfully. Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    const result = await response.json();
+                    showMessage(result.error || 'Failed to delete account', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                showMessage('Error deleting account', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoga Asana Predictor - AI-Powered Pose Recognition</title>
+    <meta
+      name="description"
+      content="Upload yoga pose images and get instant AI-powered asana predictions with high accuracy"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-image-predictor.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="nav-brand">
+          <div class="nav-logo">
+            <i class="fas fa-om"></i>
+          </div>
+          <span class="nav-title">Yoga Asana Predictor</span>
+        </a>
+        <div class="nav-links">
+          <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+          <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+          <a href="{{ url_for('webcam') }}" class="nav-link">Practice</a>
+          <!-- <a
+            href="{{ url_for('update_image_predictor') }}"
+            class="nav-link active"
+            >Upload Image</a
+          > -->
+          <a href="{{ url_for('yoga_manual') }}" class="nav-link"
+            >Yoga Manual</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="content-wrapper">
+        <!-- Header -->
+        <div class="header-section">
+          <div class="badge">
+            <i class="fas fa-sparkles"></i>
+            <span>AI-Powered Recognition</span>
+          </div>
+          <h1 class="main-title">Identify Your Yoga Pose</h1>
+          <p class="subtitle">
+            Upload an image and let our AI predict the yoga asana with precision
+          </p>
+        </div>
+
+        <!-- Upload Card -->
+        <div class="upload-card">
+          <div class="upload-zone" id="uploadZone">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <div class="upload-text">Drag & drop your image here</div>
+            <div class="upload-subtext">
+              or <span class="browse-link" id="browseLink">browse files</span>
+            </div>
+            <input
+              type="file"
+              id="fileInput"
+              class="file-input"
+              accept="image/*"
+            />
+          </div>
+
+          <div class="preview-section" id="previewSection">
+            <img id="previewImage" class="preview-image" src="" alt="Preview" />
+          </div>
+
+          <button class="analyze-btn" id="analyzeBtn">
+            <i class="fas fa-magic"></i> Analyze Pose
+          </button>
+
+          <div class="result-section" id="resultSection">
+            <div class="result-title">Predicted Asana</div>
+            <div class="result-pose" id="resultPose"></div>
+          </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="info-card">
+          <h3 class="info-title">
+            <i class="fas fa-lightbulb"></i>
+            How it works
+          </h3>
+          <ol class="info-list">
+            <li>
+              <span class="number">1.</span>
+              <span>Upload or drag & drop an image of a yoga pose</span>
+            </li>
+            <li>
+              <span class="number">2.</span>
+              <span>Our AI model analyzes the pose instantly</span>
+            </li>
+            <li>
+              <span class="number">3.</span>
+              <span>Get the predicted asana name with high accuracy</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/js-image-predictor.js') }}"></script>
+  </body>
+</html>

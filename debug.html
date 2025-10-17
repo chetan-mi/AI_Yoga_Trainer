@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Language Selection</title>
+    <style>
+        .language-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .language-modal.hidden {
+            display: none;
+        }
+        .language-option {
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            margin: 10px;
+            color: white;
+        }
+        .language-option.selected {
+            background: #ffd43b;
+            color: #667eea;
+        }
+        .start-session-btn {
+            background: #ffd43b;
+            color: #667eea;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-modal" id="languageModal">
+        <div>
+            <h2>🌍 Choose Your Language</h2>
+            <div class="language-option" data-lang="en">🇮🇳 English (India)</div>
+            <div class="language-option" data-lang="hi">🇮🇳 हिंदी (Hindi)</div>
+            <button class="start-session-btn" id="startSessionBtn">Start Yoga Session</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedLanguage = 'en';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing language selection...');
+            const languageOptions = document.querySelectorAll('.language-option');
+            console.log('Found language options:', languageOptions.length);
+            
+            const modal = document.getElementById('languageModal');
+            console.log('Language modal element:', modal);
+            console.log('Modal classes:', modal ? modal.className : 'not found');
+            
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    console.log('Language option clicked:', this.dataset.lang);
+                    languageOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedLanguage = this.dataset.lang;
+                    console.log('Selected language set to:', selectedLanguage);
+                });
+            });
+            
+            selectedLanguage = languageOptions[0].dataset.lang;
+            languageOptions[0].classList.add('selected');
+            
+            const startSessionBtn = document.getElementById('startSessionBtn');
+            startSessionBtn.addEventListener('click', function() {
+                console.log("Start session button clicked!");
+                console.log("Selected language:", selectedLanguage);
+                alert('Session started with language: ' + selectedLanguage);
+                modal.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+

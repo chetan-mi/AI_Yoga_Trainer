@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoga AI Trainer - Live Session</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-webcam.css') }}?v=1006"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Auth Check Script in Head -->
+    <script>
+      // Check authentication immediately when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/api/auth_check")
+          .then((response) => {
+            if (!response.ok) {
+              // Redirect to login if not authenticated
+              window.location.href =
+                "/login?next=" + encodeURIComponent(window.location.pathname);
+              return;
+            }
+            return response.json();
+          })
+          .then((userData) => {
+            if (userData && userData.authenticated) {
+              console.log("User authenticated:", userData.username);
+              // Set user ID for webcam.js to use
+              window.currentUserId = userData.user_id;
+              
+              // Call setCurrentUserId function when available
+              if (typeof setCurrentUserId === 'function') {
+                setCurrentUserId(userData.user_id);
+              } else {
+                // Wait for the function to be available
+                setTimeout(() => {
+                  if (typeof setCurrentUserId === 'function') {
+                    setCurrentUserId(userData.user_id);
+                  }
+                }, 100);
+              }
+              
+              // Load user profile data when the function is available
+              if (typeof loadUserProfile === 'function') {
+                loadUserProfile();
+              } else {
+                // Wait for the function to be available
+                setTimeout(() => {
+                  if (typeof loadUserProfile === 'function') {
+                    loadUserProfile();
+                  }
+                }, 100);
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Auth check failed:", error);
+            window.location.href = "/login";
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Main Video Section -->
+      <div class="video-section">
+        <div class="video-header">
+          <div class="session-title">
+            <div class="nav-logo">
+              <img src="/static/uploads/yogologo.jpg" alt="Yoga Logo" style="height: 40px">
+              <span class="logo-text">AI Yoga Trainer</span>
+            </div>
+          </div>
+          <div class="header-nav-buttons">
+            <button id="homeBtn" class="nav-btn home-btn" onclick="window.location.href='/'" title="Go to Home">
+              🏠 Home
+            </button>
+            <button id="yogaManualBtn" class="nav-btn yoga-manual-btn" onclick="window.location.href='/yoga-manual'" title="Go to Yoga Manual">
+              📖 Yoga Manual
+            </button>
+            <button id="dashboardBtn" class="nav-btn dashboard-btn" onclick="window.location.href='/dashboard'" title="Go to Dashboard">
+              📊 Dashboard
+            </button>
+          </div>
+        </div>
+
+        <div class="video-container">
+          <video
+            id="video"
+            autoplay
+            playsinline
+            muted
+            style="display: none"
+          ></video>
+          <canvas id="canvas" style="display: none"></canvas>
+        </div>
+
+        <!-- Current Pose Title -->
+        <div class="pose-title-bar">
+          <div class="current-pose-title">
+            <span>Current Pose: </span>
+            <span id="poseName">—</span>
+          </div>
+          <div
+            class="detection-accuracy"
+            id="detectionAccuracy"
+            style="display: none"
+          >
+            <span>Accuracy: </span>
+            <span id="confidenceValueBottom">—</span>
+          </div>
+        </div>
+
+        <!-- Footer Controls -->
+        <div class="footer-controls">
+          <div class="control-buttons">
+            <button id="togglePanelBtn" class="toggle-panel-btn">
+              Show Instructions
+            </button>
+            <button id="benefitsBtn" class="info-btn benefits-btn">
+              Benefits
+            </button>
+            <select id="languageSelect" class="language-select">
+              <option value="en">English</option>
+              <option value="hi">Hindi (हिंदी)</option>
+              <option value="kn">Kannada (ಕನ್ನಡ)</option>
+              <option value="ta">Tamil (தமிழ்)</option>
+              <option value="te">Telugu (తెలుగు)</option>
+              <option value="mr">Marathi (मराठी)</option>
+              <option value="bn">Bengali (বাংলা)</option>
+              <option value="gu">Gujarati (ગুজরાতী)</option>
+              <option value="pa">Punjabi (ਪੰਜਾਬੀ)</option>
+            </select>
+            <button id="startBtn">
+              <span>Start Session</span>
+            </button>
+            <button id="stopBtn" disabled>End Session</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Info & Pose Analysis Box -->
+      <div class="user-analysis-box">
+        <div class="analysis-header">
+          <div class="analysis-title">👤 User Profile & Pose Analysis</div>
+        </div>
+        <div class="analysis-content">
+          <!-- User Profile Section -->
+          <div class="user-profile-container">
+            <div class="user-profile-header">
+              <div class="user-avatar-webcam" id="userAvatarWebcam">
+                <div class="avatar-placeholder">👤</div>
+              </div>
+              <div class="user-info-webcam">
+                <div class="user-name-webcam" id="userNameWebcam">Loading...</div>
+                <div class="user-email-webcam" id="userEmailWebcam">Loading...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pose Info -->
+          <div class="pose-info">
+            <div class="pose-name-full" id="poseNameFull">—</div>
+            <div class="sanskrit-name" id="sanskritName">—</div>
+            <div class="confidence-display-analysis">
+              <span class="confidence-label">Confidence:</span>
+              <span
+                class="confidence-value-analysis"
+                id="confidenceValueAnalysis"
+                >—</span
+              >
+            </div>
+            <div class="confidence-bar-analysis">
+              <div
+                class="confidence-fill-analysis"
+                id="confidenceBarAnalysis"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Body Measurements -->
+          <div class="body-angles-container">
+            <div class="angles-title">Body Analysis</div>
+            <div class="angle-measurements" id="angleMeasurements">
+              <div class="angle-item">
+                <span class="angle-label">Spine:</span>
+                <span class="angle-value" id="spineAngle">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Knee:</span>
+                <span class="angle-value" id="kneeAngle">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Hip:</span>
+                <span class="angle-value" id="hipAngle">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Shoulder:</span>
+                <span class="angle-value" id="shoulderAngle">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Arm Span:</span>
+                <span class="angle-value" id="armSpan">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Leg Length:</span>
+                <span class="angle-value" id="legLength">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Torso:</span>
+                <span class="angle-value" id="torsoLength">—</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-label">Balance:</span>
+                <span class="angle-value" id="balanceScore">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions Panel -->
+      <div class="instructions-panel" id="instructionsPanel">
+        <div class="instructions-header">
+          <div class="instructions-title" id="panelTitle">
+            📋 Pose Instructions
+          </div>
+        </div>
+        <div class="instructions-content">
+          <ul class="instructions-list" id="instructionsList">
+            <li>Start session to see pose instructions</li>
+          </ul>
+          <div
+            class="benefits-content"
+            id="benefitsContent"
+            style="display: none"
+          >
+            <div class="benefits-text" id="benefitsText"></div>
+          </div>
+          <div
+            class="contraindications-content"
+            id="contraindicationsContent"
+            style="display: none"
+          >
+            <div
+              class="contraindications-text"
+              id="contraindicationsText"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- activity indicator for tracking purpose -->
+
+    <div
+      id="activity-indicator"
+      style="
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #51cf66;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(81, 207, 102, 0.3);
+      "
+    >
+      ✅ Activity Logged
+    </div>
+
+    <script src="{{ url_for('static', filename='js/js-webcam.js') }}?v=1008"></script>
+  </body>
+</html>
